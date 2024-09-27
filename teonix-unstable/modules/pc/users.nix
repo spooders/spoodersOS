@@ -1,4 +1,4 @@
-{ config, pkgsStable, pkgsUnstable, ... }:
+{ config, pkgs, stable-pkgs, ... }:
 
 {
   users = {
@@ -8,9 +8,9 @@
       extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "nordvpn" ];
 
       # Choose packages from either stable or unstable
-      packages = with pkgsUnstable; [
+      packages = with pkgs; [
         # Add unstable packages here (e.g., wget from unstable if needed)
-      ] ++ (with pkgsStable; [
+      ] ++ (with stable-pkgs; [
         # Use stable packages if needed
       ]);
     };

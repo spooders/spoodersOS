@@ -2,7 +2,7 @@
 
 {
   # for cachy
-  chaotic.mesa-git.enable = true;
+  #chaotic.mesa-git.enable = true;
 
   programs = {
     #xwayland.enable = true;

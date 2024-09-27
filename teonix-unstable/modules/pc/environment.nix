@@ -3,7 +3,7 @@
 {
   environment = {
     # for cachy
-    # systemPackages = [ pkgs.lan-mouse_git ];
+    systemPackages = [ pkgs.lan-mouse_git ];
     variables.RUST_MIN_STACK = "16777216";
 
     # Optionally set system-wide environment variables

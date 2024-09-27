@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsStable, ... }:
+{ config, pkgs, stable-pkgs, ... }:
 
 {
   boot = {

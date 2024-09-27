@@ -1,8 +1,8 @@
-{ config, pkgs, pkgsStable, pkgsUnstable, ... }:
+{ config, pkgs, stable-pkgs, ... }:
 
 let
-  customRetroarch = pkgsStable.retroarch.override {
-    cores = with pkgsStable.libretro; [
+  customRetroarch = pkgs.retroarch.override {
+    cores = with pkgs.libretro; [
       snes9x
       beetle-psx-hw
       desmume
@@ -21,7 +21,7 @@ in
 {
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgsUnstable; [
+  environment.systemPackages = with pkgs; [
     ####################
     # System Utilities #
     ####################
@@ -321,13 +321,21 @@ in
     vcpkg
     gnumake
     cmakeMinimal
+    scrcpy
+    notion
 
 
     libglvnd
     steam-run
+    nix-ld
+    samba
+    qmmp
+    clementine
+    yt-dlp
 
     
-  ] ++ (with pkgsStable; [
+  ] ++ (with stable-pkgs; [
+    mesa
     
     #python3.withPackages (ps: with ps; [ requests ]) # Python 3.10 with requests package
   ]);

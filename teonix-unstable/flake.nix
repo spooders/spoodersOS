@@ -13,12 +13,26 @@
 
   outputs = { self, nixos-stable, nixos-unstable, chaotic, ... } @ inputs:
   let
-    pkgsStable = import nixos-stable { system = "x86_64-linux"; config.allowUnfree = true; };
-    pkgsUnstable = import nixos-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
-    #pkgsCachy = import cachyos { system = "x86_64-linux"; };  # CachyOS packages
+    system = "x86_64-linux"; 
+
+    pkgs = import nixos-unstable {
+      inherit system;
+      config.allowUnfree = true; 
+    };
+
+    stable-pkgs = import nixos-stable {
+      inherit system;
+      config.allowUnfree = true; 
+    };
+    
+    #pkgsCachy = import cachyos { inherit system; };  # CachyOS packages
   in {
     nixosConfigurations.nixbox = nixos-unstable.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
+
+      specialArgs = {
+        inherit stable-pkgs inputs;
+      };
 
       modules = [
         ./modules/pc/bootloader.nix
@@ -40,9 +54,6 @@
         chaotic.nixosModules.default # OUR DEFAULT MODULE
       ];
 
-      specialArgs = {
-        inherit pkgsStable pkgsUnstable inputs;
-      };
     };
   };
 }

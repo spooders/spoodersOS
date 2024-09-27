@@ -1,7 +1,7 @@
-{ config, pkgs, inputs, pkgsStable, pkgsUnstable, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
-  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgsUnstable.stdenv.hostPlatform.system};
+  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 
 {
@@ -14,7 +14,7 @@ in
     # REQUIRES mkdir -p /etc/custom-files/edid/ && sudo cp edid.bin /etc/custom-files/edid/
     firmware = [
       (
-        pkgsStable.runCommand "edid.bin" { } ''
+        pkgs.runCommand "edid.bin" { } ''
           mkdir -p $out/lib/firmware/edid
           cp ${/etc/custom-files/edid/edid.bin} $out/lib/firmware/edid/edid.bin
         ''
@@ -39,11 +39,11 @@ in
     graphics = {
       enable = true;
 
-      package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
+      #package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
 
       ## amdvlk: an open-source Vulkan driver from AMD
-      extraPackages = [ pkgs.amdvlk ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+      #extraPackages = [ pkgs.amdvlk ];
+      #extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
 
     };
 

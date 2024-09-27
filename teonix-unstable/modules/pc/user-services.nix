@@ -1,4 +1,4 @@
-{ config, pkgsStable, pkgsUnstable, ... }:
+{ config, pkgs, ... }:
 
 {
   systemd.user.services = {
@@ -9,7 +9,7 @@
       wantedBy = [ "default.target" ];
 
       # Use stable bluez package
-      serviceConfig.ExecStart = "${pkgsStable.bluez}/bin/mpris-proxy";
+      serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     };
   };
 }
